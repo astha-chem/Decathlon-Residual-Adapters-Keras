@@ -35,4 +35,4 @@ The Adadelta optimizer was used instead of SGD+Momentum for faster convergence. 
 ## Models
 The below model is the WRN-28-4 model.
 
-<img src="https://raw.githubusercontent.com/titu1994/Wide-Residual-Networks/master/plots/WRN-28-4.png" height=100% width=100%>
+<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4.png" height=100% width=100%>

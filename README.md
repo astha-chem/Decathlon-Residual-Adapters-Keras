@@ -33,6 +33,6 @@ The Adadelta optimizer was used instead of SGD+Momentum for faster convergence. 
 <img src="https://github.com/titu1994/Wide-Residual-Networks/blob/master/plots/WRN_28_8%20validation%20curves.png?raw=true" height=100% width=100%>
 
 ## Models
-The below model is the WRN-28-8 model.
+The below model is the WRN-28-4 model.
 
-<img src="https://raw.githubusercontent.com/titu1994/Wide-Residual-Networks/master/plots/WRN-28-8.png" height=100% width=100%>
+<img src="https://raw.githubusercontent.com/titu1994/Wide-Residual-Networks/master/plots/WRN-28-4.png" height=100% width=100%>

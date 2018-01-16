@@ -38,17 +38,12 @@ def expand_conv(init, base, k, strides=(1, 1)):
     x = Convolution2D(base * k, (3, 3), padding='same', kernel_initializer='he_normal',
                       use_bias=False)(x)
     x = res_adapt_mod(x)
-    
-    #new addition v2
-    x = BatchNormalization(axis=channel_axis, momentum=0.1, epsilon=1e-5, gamma_initializer='uniform')(x)
     skip = Convolution2D(base * k, (1, 1), padding='same', strides=strides, kernel_initializer='he_normal',
                       use_bias=False)(init)
 
-    x = Add()([x, skip])
-    
-    #new addition v2
-    x = Activation('relu')(x)
-    return x
+    m = Add()([x, skip])
+
+    return m
 
 
 def conv1_block(input, k=1, dropout=0.0):
@@ -66,11 +61,10 @@ def conv1_block(input, k=1, dropout=0.0):
     x = Convolution2D(16 * k, (3, 3), padding='same', kernel_initializer='he_normal',
                       use_bias=False)(x)
     x = res_adapt_mod(x)
-    x = BatchNormalization(axis=channel_axis, momentum=0.1, epsilon=1e-5, gamma_initializer='uniform')(x) 
+    x = BatchNormalization(axis=channel_axis, momentum=0.1, epsilon=1e-5, gamma_initializer='uniform')(x)
+    x = Activation('relu')(x)    
 
     x = Add()([init, x])
-    #switched over in v2
-    x = Activation('relu')(x)   
     return x
 
 def conv2_block(input, k=1, dropout=0.0):
@@ -89,9 +83,10 @@ def conv2_block(input, k=1, dropout=0.0):
                       use_bias=False)(x)
     x = res_adapt_mod(x)
     x = BatchNormalization(axis=channel_axis, momentum=0.1, epsilon=1e-5, gamma_initializer='uniform')(x)
+    x = Activation('relu')(x)
 
     x = Add()([init, x])
-    x = Activation('relu')(x)
+
     return x
 
 def conv3_block(input, k=1, dropout=0.0):
@@ -111,10 +106,10 @@ def conv3_block(input, k=1, dropout=0.0):
                       use_bias=False)(x)
     x = res_adapt_mod(x)
     x = BatchNormalization(axis=channel_axis, momentum=0.1, epsilon=1e-5, gamma_initializer='uniform')(x)
-    
+    x = Activation('relu')(x)
     
     x = Add()([init, x])
-    x = Activation('relu')(x)
+
 
     return x
 

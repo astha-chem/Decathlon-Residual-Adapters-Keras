@@ -35,4 +35,4 @@ The Adadelta optimizer was used instead of SGD+Momentum for faster convergence. 
 ## Models
 The below model is the WRN-28-4-RAM model.
 
-<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4_net4.png" height=100% width=100%>
+<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4_v3.png" height=100% width=100%>

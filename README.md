@@ -1,4 +1,4 @@
-# Wide Residual Networks in Keras
+# Wide Residual Networks with Residual Adapter Modules in Keras
 
 Implementation of Wide Residual Networks from the paper <a href="http://arxiv.org/pdf/1605.07146v1.pdf">Wide Residual Networks</a> in Keras.
 
@@ -33,6 +33,6 @@ The Adadelta optimizer was used instead of SGD+Momentum for faster convergence. 
 <img src="https://github.com/titu1994/Wide-Residual-Networks/blob/master/plots/WRN_28_8%20validation%20curves.png?raw=true" height=100% width=100%>
 
 ## Models
-The below model is the WRN-28-4 model.
+The below model is the WRN-28-4-RAM model.
 
-<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4.png" height=100% width=100%>
+<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4_net4.png" height=100% width=100%>

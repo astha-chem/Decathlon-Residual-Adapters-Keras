@@ -1,38 +1,32 @@
 # Wide Residual Networks with Residual Adapter Modules in Keras
 
-Implementation of Wide Residual Networks from the paper <a href="http://arxiv.org/pdf/1605.07146v1.pdf">Wide Residual Networks</a> in Keras.
+Implementation of wide residual network with Residual Adapter Module from the paper <a href="https://arxiv.org/abs/1705.08045">Learning multiple visual domains with residual adapters</a> in Keras.
 
-## Usage
+This is an implementation of the paper 'Learning multiple visual domains with residual adapters'. 
 
-It can be used by importing the wide_residial_network script and using the create_wide_residual_network() method.
-There are several parameters which can be changed to increase the depth or width of the network.
+## Objective: 
+make a single neural network that is good at classifying images from multiple visual domains - specifically, 10 visual domains, called the decathlon challenge.
 
-Note that the number of layers can be calculated by the formula : `nb_layers = 4 + 6 * N` <br>
-Therefore N can be computed as : `N = (nb_layers - 4) / 6`
+## Approach:
+This leads to a model that is 2X the size of the individual domain network, with 90% of the parameters shared between domains and 10% of the parameters are domain specific.
+Evaluation:
 
-`import wide_residial_network as wrn`<br>
-`ip = Input(shape=(3, 32, 32)) # For CIFAR 10`
+Baseline error is given as twice the error for each domain for a model with 10x parameters - 10 neural networks, fully finetuned on each domain. This has an s-score of 2500.
+The RAM model gives a score of 2118 when decay coefficients are not optimized for each domain, but gives a superior score of 2643 points when higher decay coefficient (0.002 or 0.005 rather than the default 0.0005) is used for the domains with less data.
 
-`wrn_28_10 = wrn.create_wide_residual_network(ip, nb_classes=10, N=4, k=10, dropout=0.0, verbose=1)`
+## Claims:
+The key claim is that the performance of the 2X size model with residual adapters proposed here has similar or better effectiveness on the visual decathlon task than the 10x sized fully finetuned model. The proposed model is smaller and takes less time to converge.
 
-`model = Model(ip, wrn_28_10)`
+The paper claims to have 0.1x domain specific parameters for each network. In the present implementation there are a total of 6,558,770 parameters of which 704,194 are domain specific. This is ~0.1x of the total parameters, in line with the paper.
 
-## Testing
-### WRN-16-8
-The WRN-16-8 model has been tested on the CIFAR 10 dataset. It achieves a score of 93.68% after 100 epochs. It is not as high as the accuracy posted in the paper (95.19%), however the score may improve with further training. 
+Domain specific trainable parameters include:
 
-Training was done by using the Adam optimizer instead of SGD+Momentum for faster convergence. The history of training/validation accuracy and loss is not available for the first 30 epochs due to an overwriting of the files. However the history of the last 70 epochs has been shown in the figure below. The script and weights for this model are also provided.
+1. all batch norms
+2. all convolutions within the residual adapters.
 
-<img src="https://raw.githubusercontent.com/titu1994/Wide-Residual-Networks/master/plots/Validation curves.png" height=100% width=100%>
+The frozen parameters are all the convolutions not part of the residual adapters.
 
-### WRN-28-8
-The WRN-28-10 model could not be used due to GPU memory constraints, hence WRN-28-8 model was used instead with a batch size of 64. Each epoch requires roughly 886 seconds, and therefore this was only run for 100 epochs. It achieves a score of 95.08 %, less than the best score of 95.83 % obtained by the WRN-28-10 network.
-
-The Adadelta optimizer was used instead of SGD+Momentum for faster convergence. The history of training/validation accuracy and loss is shown as below. The script and weights for this model are also provided.
-
-<img src="https://github.com/titu1994/Wide-Residual-Networks/blob/master/plots/WRN_28_8%20validation%20curves.png?raw=true" height=100% width=100%>
 
 ## Models
-The below model is the WRN-28-4-RAM model.
-
-<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4-RAM_v3.png" height=100% width=100%>
+The below model is the WRN-28-4-RAM model implemented here. However, this is not an exact match with the paper and does not train well on imagenet. 
+<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4-RAM.png" height=100% width=100%>

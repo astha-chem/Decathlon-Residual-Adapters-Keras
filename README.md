@@ -2,7 +2,7 @@
 
 Implementation of wide residual network with Residual Adapter Module from the paper <a href="https://arxiv.org/abs/1705.08045">Learning multiple visual domains with residual adapters</a> in Keras.
 
-This is an implementation of the paper 'Learning multiple visual domains with residual adapters'. 
+This is ongoing work on the implementation of the paper 'Learning multiple visual domains with residual adapters'. 
 
 ## Objective: 
 make a single neural network that is good at classifying images from multiple visual domains - specifically, 10 visual domains, called the decathlon challenge.

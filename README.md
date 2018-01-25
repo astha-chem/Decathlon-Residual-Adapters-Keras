@@ -28,5 +28,5 @@ The frozen parameters are all the convolutions not part of the residual adapters
 
 
 ## Models
-The below model is the WRN-28-4-RAM model implemented here. However, this is not an exact match with the paper and does not train well on imagenet in its current form. 
-<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/WRN-28-4-RAM.png" height=100% width=100%>
+The below model is an implementation of ResNet28_RAM model implemented here. 
+<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/ResNet28_RAM.png" height=100% width=100%>

@@ -47,7 +47,7 @@ def conv_block(input, filters=64, factor=1, learnall = True):
     m = Add()([init, x])
     
     x = Activation('relu')(m)
-    return m
+    return x
 
 def conv_scaledown(init, filters=64, factor=1, strides=(1, 1), learnall = True):
     

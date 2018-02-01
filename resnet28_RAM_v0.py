@@ -21,7 +21,7 @@ def pre_layers_conv(input, filters = 32, factor=1, learnall = True):
     channel_axis = 1 if K.image_data_format() == "channels_first" else -1
 
     x = BatchNormalization(axis=channel_axis, momentum=0.1, epsilon=1e-5, gamma_initializer='uniform')(x)
-    #x = Activation('relu')(x)
+    x = Activation('relu')(x)
     return x
 
 

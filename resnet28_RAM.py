@@ -1,8 +1,9 @@
 from keras.models import Model
-from keras.layers import Input, Add, Activation, Dropout, Flatten, Dense
+from keras.layers import Input, Add, Activation, Dropout, Flatten, Dense, Concatenate, ZeroPadding3D, ZeroPadding2D
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, AveragePooling2D
 from keras.layers.normalization import BatchNormalization
 from keras import backend as K
+
 
 def res_adapt_mod(input, dims):
     init=input
@@ -66,8 +67,13 @@ def conv_scaledown(init, filters=64, factor=1, strides=(1, 1), learnall = True):
     #new addition v2
     x = BatchNormalization(axis=channel_axis, momentum=0.1, epsilon=1e-5, gamma_initializer='uniform')(x)
     
-    skip = Convolution2D(filters*factor, (1, 1), padding='same', strides=strides, kernel_initializer='he_normal',
-                      use_bias=False)(init)
+    #v3
+    #skip = AveragePooling2D((2,2), data_format=K.image_data_format())(init)
+    #skip = ZeroPadding3D(padding=(0,0,filters*factor/2), data_format=K.image_data_format())(skip)
+    #skip = ZeroPadding3D(padding=((0,0),(0,int(filters*factor/2)), (int(filters*factor/2),0)), data_format=K.image_data_format())(skip)
+    #skip = Concatenate(axis=3)([skip,init_2])
+   
+    skip = Convolution2D(filters*factor, (1, 1), padding='same', strides=strides, kernel_initializer='he_normal',use_bias=False)(init)
     x = Add()([skip, x])
     
     #new addition v2

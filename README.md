@@ -38,8 +38,11 @@ Possible differences from the paper:
 1. L2 Regularization: The paper does not explicitly mention regularization, but in this implementation L2 regularization was used with a value 0.0001. Without regularization, training accuracy could go up to 100 % for SVHN, but validation accuracy stalled at <40%. 
 2. Scaling down dimensions at each block: The authors do not discuss this in the paper explicitly. The architecture consists of 3 blocks, each of which contains 4 residual units. The dimensions for these blocks are 32x32x64, 16x16x128 and 8x8x256 (starting with 64x64x3 images). The dimensions scale down at each block. I have used a 1x1 convolutional shortcut for this, as in the Wide Residual Networks implementation, while the authors did this in 2 steps : 1. (2,2) average pooling, and concatenate the tensor with a '0' tensor of the same dimensions, along the channel axis. 
 
-This is a schematic of the model: 
-<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/ResNet28_RAM.png" height=100% width=100%>
+When training the network for multiple domains, 10 different networks need to be created using the statement: 
+      create_resnet_RAM(input_dim, filters=32, factor=1, nb_classes=100, N=4, verbose=1, learnall = True, name = 'imagenet12')
+1. The parameter 'learnall' should be set to True when learning all parameters (for example for Imagenet) and should be set to False when learning only domain-specific residual adapter module parameters. 
+2. The parameter 'name' should be set to the domain name such as 'svhn', 'daimlerpeds' etc. The last layer is never shared because the softmax layer depends on number of classes. The model relies on the name being different for different models to prevent throwing an error while transferring weights from 1 model to another. 
+
 
 ## Training
 The model with Residual Adapter Modules was trained from scratch on the SVHN dataset. The dataset has 70k images and 10 classes. 
@@ -47,9 +50,10 @@ The paper reports accuracy of 96.63% for this dataset. The best accuracy obtaine
 
 Training was done using plain SGD without momentum, the learning rate was gradually reduced from 0.1 to 0.01 and 0.001, with each being for 5-6 epochs. Batch size was 64, and 64x64 images were used. 
 
-The training time was ~380s per epoch on a Maxwell architecture GPU with 1664 CUDA cores and 8GB memory (Paperspace GPU+).
+The training time was ~380s per epoch on a Maxwell architecture GPU with 1664 CUDA cores and 8GB memory (Paperspace GPU+). It might be worth noting that the training time was ~216s per epoch without the residual adapter modules. The change in # of parameters was ~10%. 
 
-
+This is a schematic of the ResNet28 model with Residual Adapter Modules: 
+<img src="https://github.com/astha-chem/Decathlon-Residual-Adapters-Keras/blob/master/plots/ResNet28_RAM.png" height=100% width=100%>
 
 
 

@@ -5,7 +5,7 @@ from keras.layers.normalization import BatchNormalization
 from keras import backend as K
 from keras.regularizers import l2
 
-kernel_regularizer = l2(1.e-4)
+kernel_regularizer = l2(2.e-4)
 
 def res_adapt_mod(input, dims):
     init=input

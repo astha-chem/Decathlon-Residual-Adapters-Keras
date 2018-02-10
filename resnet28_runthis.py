@@ -17,8 +17,9 @@ importlib.reload(resnet_RAM)
 
 
 decathlon_data_folder = "/home/paperspace/nbs/data/"
+decathlon_data_folder = "/homes/siddb/wissen/imnet/data/"
 task = 'cifar100'
-modeltype = "RAM_scratch_1"
+modeltype = "RAM_scratch_reg5"
 classes = 100
 decay = 0.0005
 weights = "weights_" + task + "_" + modeltype + ".h5"
